@@ -1,0 +1,69 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.header {
+    background-color: #c3f7f2 !important;
+}
+
+.container {    
+    max-width:100%!important;
+}
+
+.footer {
+    background-color: #2f8098 !important;
+    color:#ffffff!important;
+    text-align:center!important;
+}
+
+.card-login {
+    background-color: #77aebd !important;
+}
+
+.py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.toggle-password {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#TablaLista thead {
+    background-color: #2f8098;
+    text-align: center;
+    font-family: Arial,Helvetica !important;
+    font-size: 11pt !important;
+    height: 30px;
+    color:#fff;
+    vertical-align: middle !important;
+}
+
+
+.required::before {
+    content: '* ' !important;
+    color: #F27321 !important;
+    font-weight: bold !important;
+    font-size: 12pt;
+}

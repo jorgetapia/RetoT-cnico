@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccesor;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Portal Reto Técnico</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PortalRetoTécnico.styles.css" asp-append-version="true" />    
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <div id="progress" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001; opacity: .8; filter: alpha(opacity=70); display: none">
+        <p style="position: absolute; top: 30%; left: 45%; color: White;">
+            <img src="~/img/Cargando.gif" style=" width: 140px;" />
+            <br>
+            Procesando, espere un momento...
+        </p>
+    </div>
+    <header class="header">
+        <nav class="header navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><img style="height:35px;width:auto;" src="~/img/cepdi-logo-01@3x.png" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                @if (HttpContextAccesor.HttpContext.Session.GetString("Username") != null)
+                {
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Usuarios/Index">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Medicamentos/Index">Medicamentos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/WebService/Index">Lectura XML y Consumo Web Service</a>
+                        </li>
+                        <li class="nav-item" style="text-align:right!important">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/login">Cerrar sesion</a>
+                        </li>
+                    </ul>
+                }else{
+                    <ul class="navbar-nav flex-grow-1" style="text-align:right!important">
+                       
+                        <li class="nav-item" style="text-align:right!important">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/login">Iniciar sesión</a>
+                        </li>
+                      
+                    </ul>
+                }
+                </div>
+            
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="footer">
+            &copy; 2024 - Portal Reto Técnico Jorge Tapia
+        </div>
+    </footer>
+   
+    
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+</html>

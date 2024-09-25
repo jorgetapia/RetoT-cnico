@@ -1,0 +1,6 @@
+@ApiAccesoDatosReto_HostAddress = http://localhost:5017
+
+GET {{ApiAccesoDatosReto_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,120 @@
+﻿@page
+@model PortalRetoTécnico.Pages.Usuarios.IndexModel
+@{
+}
+
+
+<input type="hidden" id="urlApiUsuarios" name="urlApiUsuarios" value="@Model.urlApiUsuarios" />
+
+
+<div class="text-center">
+    <h1 class="display-4">Módulo de Usuarios</h1>
+</div>
+
+<button id="btnAddUser" class="btn btn-success">Agregar un usuario</button>
+<div id="modalContainer"></div>
+
+<table id="TablaLista" class="display">
+    <thead>
+        <tr>
+            <th>Id usuario</th>
+            <th>Nombre</th>
+            <th>Fecha de creación</th>
+            <th>Usuario</th>
+            <th>Password</th>
+            <th>Estatus</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- En esta sección se adicionaran los datos de la tabla usuarios -->
+    </tbody>
+</table>
+
+<!-- Modal para agregar o editar usuario -->
+<div id="UserModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="UserForm">
+            <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        Los datos marcados con un * son obligatorios.
+                    </div>
+                    <input type="hidden" id="Action" value="">
+                    <input type="hidden" id="idusuario">
+                  
+                    <input type="hidden" id="fechacreacion" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fff")">
+                    <div class="form-group">
+                        <label for="nombre" class="required">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="usuario" class="required">Usuario:</label>
+                        <input type="text" class="form-control" id="usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="required">Password:</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="estatus">Estatus:</label>                        
+                        <select id="estatus"  name="estatus"><option value="1">Activo</option><option value="0">Inactivo</option></select>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="/ModuloUsuarios.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        // Inicializamos el grid
+        initDataTable();
+
+        // Evento para agregar usuario
+        $('#btnAddUser').on('click', function () {
+            resetForm('#UserForm');
+            $("#tituloModal").html("Agregar un usuario");
+            showModal('#UserModal');
+            $("#Action").val("POST");
+        });
+
+        // Evento para editar usuario
+        $('#TablaLista tbody').on('click', '.btnEdit', function () {
+            resetForm('#UserForm');
+            const userId = $(this).data('id');
+              $("#tituloModal").html("Editar un usuario");
+            loadUserData(userId);
+             $("#Action").val("PUT");
+        });
+
+        // // Manejo del submit para agregar y editar usuarios
+        handleFormSubmit('#UserForm');
+        
+
+        // Manejo de la acción para eliminar usuario
+        $('#TablaLista tbody').on('click', '.btnDelete', function () {
+            const userId = $(this).data('id');
+            deleteUser(userId);
+        });
+
+        // Evento para mostrar/ocultar la contraseña
+        $('#TablaLista tbody').on('click', '.toggle-password', togglePasswordVisibility);
+    });
+</script>
+
+

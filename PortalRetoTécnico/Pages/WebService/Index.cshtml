@@ -1,0 +1,79 @@
+﻿@page
+@model PortalRetoTécnico.Pages.WebService.IndexModel
+@{
+}
+<div class="text-center">
+    <h1 class="display-4">Módulo para Lectura XML y Consumo Web Service </h1>
+</div>
+
+
+<div id="drop_zone" style="border: 2px dashed #0087f7; width: 350px; height: 150px; text-align: center; padding: 20px;">
+    Arrastra y suelta el archivo tu archivo XML aquí...
+</div>
+<input type="file" id="fileInput" accept=".xml" style="display: none;">
+
+<div id="contentMensaje"></div>
+<script>
+    document.getElementById('drop_zone').addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.style.backgroundColor = '#d3d3d3';
+    });
+
+    document.getElementById('drop_zone').addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.style.backgroundColor = '#fff';
+        var file = e.dataTransfer.files[0];
+        if (file.type === "text/xml" || file.name.endsWith('.xml')) {
+            processXMLFile(file);
+        } else {
+            alert("Solo se permiten archivos XML");
+        }
+    });
+
+    function processXMLFile(file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var xmlContent = e.target.result;            
+            sendXMLToBackend(xmlContent);
+        };
+        reader.readAsText(file);
+    }
+
+
+    function sendXMLToBackend(xmlContent) {
+        $("#progress").show();
+         $("#contentMensaje").html("");
+        // Convierte el XML a Base64
+        let base64XML = btoa(xmlContent);  // btoa convierte la cadena a Base64
+        $.ajax({
+            url: 'http://localhost:5017/api/XmlWebService/',  // URL del endpoint
+            type: 'POST',
+            contentType: 'application/json',  
+            data: JSON.stringify({ xmlBase64: base64XML }),  // Enviamos el XML como cadena de texto
+            dataType: 'json',  // Esperamos que el servidor responda en JSON
+            success: function (data) {
+                if (data.success) {                   
+                    openPDFInNewTab(data.pdfBase64);  // Abrimos el PDF en una nueva pestaña
+                } else {                   
+
+                    $("#contentMensaje").html(data.message);
+                }
+                $("#progress").hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error en la solicitud:', textStatus, errorThrown);
+                alert('Ocurrió un error en la solicitud: ' + textStatus);
+                $("#progress").hide();
+            }
+        });
+    }
+
+    function openPDFInNewTab(base64PDF) {
+        var byteArray = Uint8Array.from(atob(base64PDF), c => c.charCodeAt(0));
+        var blob = new Blob([byteArray], { type: 'application/pdf' });
+        var blobURL = URL.createObjectURL(blob);
+        window.open(blobURL, '_blank');
+    }
+</script>
