@@ -9,6 +9,7 @@ Cada modulo tiene su correspondiente API, en este caso las APIS se configuraron 
 
 Para una mejor operación y escalabilidad, las validaciones de los campos se dejaron del lado de las APIs con el objetivo de que si se cambia algún texto de validación o bien se agrega una nueva restricción como puede ser una expresión regular, solo sería modificarse en el API y no en todos los sistemas o portales que la consumen.
 Algo más a resaltar, que si bien esta indicado en el código, se parametrizaron las url de las APIS, usuario, contraseña y url del WS SOAP, esto para si en algún futuro se cambia a otro servidor o cambian los usuarios y contraseñas no se tenga que volver a compilar y publicar, solo se ajusta en el AppSetting.
+
 Datos para iniciar sesión en el portal
 Usuario: ejemplo
 Password: ejemplo1$R
