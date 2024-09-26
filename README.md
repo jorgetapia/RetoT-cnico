@@ -1,6 +1,6 @@
 # RetoTécnico
 Prerequisito para una ejecución más practica:
-seleccionar la solución, dar clic derecho y seleccionar la opción de Configurar proyectos de inicio, se mostrara una ventana, seleccionar la opción que dice proyectos de inicio multiple y dar clic en aceptar, con ello al ejecutar la solución se iniciara el proyecto de API y el portal.
+seleccionar la solución, dar clic derecho y seleccionar la opción de Configurar proyectos de inicio, se mostrara una ventana, seleccionar la opción que dice proyectos de inicio multiple en el listado de proyectos columna de Acción elegir la opción de iniciar en ambos proyectos y dar clic en aceptar, con ello al ejecutar la solución se iniciara el proyecto de API y el portal.
 
 
 El presente proyecto es para atender los requerimientos técnicos para la evaluación técnica.
